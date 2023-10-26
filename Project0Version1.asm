@@ -85,6 +85,10 @@ main:
 	la $a0, newline
 	syscall
 	
+	li $v0, 4
+	la $a0, newline
+	syscall
+	
 	
 	## Ideally, Create two instances of $v0, moving it to $s0 and $s1, respectively, then
 	## have the functions be done in these below and printed
