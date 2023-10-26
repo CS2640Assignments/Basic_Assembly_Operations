@@ -1,5 +1,7 @@
 # CS 2640.01
 # October 20, 2023
+# Authors: Damian Varela and Joshua Estrada
+# Github Repo Link: https://github.com/CS2640Assignments/Basic_Assembly_Operations
 
 # Task 1: User Input and Output
 
@@ -87,87 +89,103 @@ main:
 	
 	li $v0, 4
 	la $a0, newline
-	syscall
-	
-	
+	syscall	
 	## Ideally, Create two instances of $v0, moving it to $s0 and $s1, respectively, then
 	## have the functions be done in these below and printed
 	
 addition:
-	# Add $s1 and $s0
-	add $t0, $s1, $s0 # store result in temporary register t0
+	add $t0, $s1, $s0 
 	
-	li $v0, 4 # print string instruction 
-	la $a0, adding # load string into argument a0 for printing 
-	syscall # execute print string instruction
+	li $v0, 4
+	la $a0, adding
+	syscall
 	
-	li $v0, 1 # print integer instruction 
-	move $a0, $t0 # move result from temporary register t0 into argument a0 for printing 
-	syscall # execute print integer instruction 
+	li $v0, 1
+	move $a0, $t0
+	syscall
 	
-	li $v0, 4 # print newline instruction 
-	la $a0, newline # load address of newline character into argument a0 for printing 
-	syscall # execute print newline instruction 
+	li $v0, 4 
+	la $a0, newline 
+	syscall
 	
 	j subtraction
 	
 subtraction:
-	# Subtract $s1 from $s0
-	sub $t1, $s0, $s1 # store result in temporary register t1
+	sub $t1, $s0, $s1 
 	
-	li $v0, 4 # print string instruction 
-	la $a0, subtracting # load string into argument a0 for printing 
-	syscall # execute print string instruction
+	li $v0, 4 
+	la $a0, subtracting 
+	syscall 
 	
-	li $v0, 1 # print integer instruction 
-	move $a0, $t1 # move result from temporary register t1 into argument a0 for printing 
-	syscall # execute print integer instruction 
+	li $v0, 1 
+	move $a0, $t1
+	syscall 
 	
-	li $v0, 4 # print newline instruction 
-	la $a0, newline # load address of newline character into argument a0 for printing 
-	syscall # execute print newline instruction 
+	li $v0, 4 
+	la $a0, newline
+	syscall 
 	
 	j multiplication
 	
 multiplication: 
-	# Multiply $s1 and $s0
-	mul $t2, $s1, $s0 # store result in temporary register t2
+	mul $t2, $s1, $s0 
 	
-	li $v0, 4 # print string instruction 
-	la $a0, multiplying # load string into argument a0 for printing 
-	syscall # execute print string instruction
+	li $v0, 4
+	la $a0, multiplying
+	syscall
 	
-	li $v0, 1 # print integer instruction 
-	move $a0, $t2 # move result from temporary register t2 into argument a0 for printing 
-	syscall # execute print integer instruction 
+	li $v0, 1
+	move $a0, $t2
+	syscall
 	
-	li $v0, 4 # print newline instruction 
-	la $a0, newline # load address of newline character into argument a0 for printing 
-	syscall # execute print newline instruction 
+	li $v0, 4 
+	la $a0, newline
+	syscall
 	
 	j division
 	
 division: 
-	# Divide $s1 from $s0
-	divu $t3,$s1,$s0 # store result in temporary register t3
 	
-	li $v0, 4 # print string instruction 
-	la $a0, dividing # load string into argument a0 for printing 
-	syscall # execute print string instruction
+	divu $t3,$s1,$s0 
 	
-	li $v0, 1 # print integer instruction 
-	move $a0,$t3 # move result from temporary register t3 into argument a0 for printing 
-	syscall # execute print integer instruction 
+	li $v0, 4
+	la $a0, dividing
+	syscall
 	
-	li $v0, 4 # print newline instruction 
-	la $a0, newline # load address of newline character into argument a0 for printing 
-	syscall # execute print newline instruction 
+	li $v0, 1
+	move $a0,$t3
+	syscall
 	
+	li $v0, 4
+	la $a0, newline
+	syscall 
+	
+check_equal:
+
+	li $v0, 4
+	la $a0, newline
+	syscall	
+
+	# Compare the user inputs
+	beq $s0, $s1, equal # They are equal
+	bne $s0, $s1, different # They are different
 	j exit
-	
+
+
+equal:
+	li $v0, 4
+	la $a0, equalNums
+	syscall
+	j exit
+
+different:
+	li $v0, 4
+	la $a0, differentNums
+	syscall
+	j exit
+			
 exit:
-	# Create an exit program syscall
-	li   $v0,10      # syscall code for exit (10)
-	syscall          # call operating system to perform operation
+	li $v0,10     
+	syscall
 
 
