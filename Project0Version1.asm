@@ -41,8 +41,6 @@ multiplying: .asciiz "The product is "
 dividing: .asciiz "The quotient is "
 newline: .asciiz "\n"
 userData: .asciiz "The user entered: "
-.data
-
 
 .text
 main:
@@ -63,26 +61,32 @@ main:
 	syscall
 	move $s1, $v0
 	
+	# Echo prompt that shows what the user entered
 	li $v0, 4
 	la $a0, userData
 	syscall
 	
+	# Calls the int saved in $s0 into $a0
 	li $v0, 1
 	move $a0, $s0
 	syscall
 	
+	# Prints a new line
 	li $v0, 4
 	la $a0, newline
 	syscall
 	
+	# Prints the echo prompt again
 	li $v0, 4
 	la $a0, userData
 	syscall
 	
+	# Moves number from $s1 into $a0 to call it
 	li $v0, 1
 	move $a0, $s1
 	syscall
 	
+	## Creates 2 new lines here for readability
 	li $v0, 4
 	la $a0, newline
 	syscall
@@ -94,7 +98,8 @@ main:
 	## have the functions be done in these below and printed
 	
 addition:
-	add $t0, $s1, $s0 
+	# Adds both numbers into a temporary register, that gets moved into $v0 for printing the addition prompt and answer
+	add $t0, $s0, $s1 
 	
 	li $v0, 4
 	la $a0, adding
@@ -108,9 +113,8 @@ addition:
 	la $a0, newline 
 	syscall
 	
-	j subtraction
-	
 subtraction:
+	# Subtracts both numbers into a temporary register, that gets moved into $v0 for printing the addition prompt and answer
 	sub $t1, $s0, $s1 
 	
 	li $v0, 4 
@@ -125,10 +129,9 @@ subtraction:
 	la $a0, newline
 	syscall 
 	
-	j multiplication
-	
 multiplication: 
-	mul $t2, $s1, $s0 
+	# Multiplies both numbers into a temporary register, that gets moved into $v0 for printing the addition prompt and answer
+	mul $t2, $s0, $s1 
 	
 	li $v0, 4
 	la $a0, multiplying
@@ -142,11 +145,9 @@ multiplication:
 	la $a0, newline
 	syscall
 	
-	j division
-	
 division: 
-	
-	divu $t3,$s1,$s0 
+	# Divides both numbers into a temporary register, that gets moved into $v0 for printing the addition prompt and answer
+	div $t3,$s0,$s1 
 	
 	li $v0, 4
 	la $a0, dividing
@@ -161,7 +162,7 @@ division:
 	syscall 
 	
 check_equal:
-
+	
 	li $v0, 4
 	la $a0, newline
 	syscall	
@@ -169,23 +170,23 @@ check_equal:
 	# Compare the user inputs
 	beq $s0, $s1, equal # They are equal
 	bne $s0, $s1, different # They are different
-	j exit
 
 
 equal:
+	# prints out equal prompt if it ends up being equal
 	li $v0, 4
 	la $a0, equalNums
 	syscall
 	j exit
 
 different:
+	# Prints out different prompt if it ends up being not equal
 	li $v0, 4
 	la $a0, differentNums
 	syscall
 	j exit
 			
 exit:
+	# Ends the program
 	li $v0,10     
 	syscall
-
-
